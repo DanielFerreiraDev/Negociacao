@@ -1,4 +1,4 @@
-export class View<T> {
+export abstract class View<T> { //Toda classe abstrata pode ter 0 ou mais métodos abstratos(um método que a classse pai não sabe como vai ser implementado)
 
     protected elemento: HTMLElement;
 
@@ -11,7 +11,5 @@ export class View<T> {
         this.elemento.innerHTML = template;
     }
 
-    template(model: T): string {
-        throw Error('Classe filha precisa implementar o método template!')
-    }
+    abstract template(model: T): string; //Não pode esquecer de implementar esse método nas classes filhas caso for instanciado.
 }
