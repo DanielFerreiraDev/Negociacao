@@ -14,11 +14,9 @@ export class NegociacaoController {
     }
     adiciona() {
         const negociacao = this.criaNegociacao();
-        negociacao.data.setDate(12); //Não vai atribuir por causa da proteção
         this.negociacoes.adiciona(negociacao);
-        this.negociacoesView.update(this.negociacoes);
-        this.mensagemView.update('Negociação adicionada com sucesso!');
         this.limparFormulario();
+        this.atualizaView();
     }
     criaNegociacao() {
         const exp = /-/g;
@@ -32,5 +30,9 @@ export class NegociacaoController {
         this.inputQuantidade.value = '1';
         this.inputValor.value = '0.0';
         this.inputData.focus();
+    }
+    atualizaView() {
+        this.negociacoesView.update(this.negociacoes);
+        this.mensagemView.update('Negociação adicionada com sucesso!');
     }
 }

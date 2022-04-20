@@ -18,16 +18,14 @@ import { NegociacoesView } from "../views/negociacoes-view.js";
         this.negociacoesView.update(this.negociacoes);
     }
 
-    adiciona(): void {
+    public adiciona(): void {
         const negociacao = this.criaNegociacao();
-        negociacao.data.setDate(12); //Não vai atribuir por causa da proteção
         this.negociacoes.adiciona(negociacao);
-        this.negociacoesView.update(this.negociacoes);
-        this.mensagemView.update('Negociação adicionada com sucesso!');
         this.limparFormulario();
+        this.atualizaView();
     }
 
-    criaNegociacao(): Negociacao {
+    private criaNegociacao(): Negociacao {
         const exp = /-/g;
         const date = new Date(this.inputData.value.replace(exp, ','));
         const quantidade = parseInt(this.inputQuantidade.value);
@@ -35,11 +33,16 @@ import { NegociacoesView } from "../views/negociacoes-view.js";
         return new Negociacao(date, quantidade, valor);
     }
 
-    limparFormulario(): void {
+    private limparFormulario(): void {
         this.inputData.value = '';
         this.inputQuantidade.value = '1';
         this.inputValor.value = '0.0';
         this.inputData.focus();
+    }
+
+    private atualizaView(): void {
+        this.negociacoesView.update(this.negociacoes);
+        this.mensagemView.update('Negociação adicionada com sucesso!');
     }
 
  }

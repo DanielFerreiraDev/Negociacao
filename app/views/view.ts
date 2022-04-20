@@ -6,7 +6,7 @@ export abstract class View<T> { //Toda classe abstrata pode ter 0 ou mais métod
         this.elemento = document.querySelector(seletor);
     }
 
-    update(model: T): void {
+    public update(model: T): void {
         const template = this.template(model);
         this.elemento.innerHTML = template;
     }
