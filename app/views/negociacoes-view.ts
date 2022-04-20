@@ -3,7 +3,7 @@ import { View } from "./view.js";
 
 export class NegociacoesView extends View<Negociacoes>{
 
-    template(model: Negociacoes): string { //Declarar o template para a view
+    protected template(model: Negociacoes): string { //Declarar o template para a view
         return `
         <table class="table table-hover table-bordered">
             <thead>

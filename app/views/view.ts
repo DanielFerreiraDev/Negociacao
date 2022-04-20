@@ -11,5 +11,5 @@ export abstract class View<T> { //Toda classe abstrata pode ter 0 ou mais métod
         this.elemento.innerHTML = template;
     }
 
-    abstract template(model: T): string; //Não pode esquecer de implementar esse método nas classes filhas caso for instanciado.
+    protected abstract template(model: T): string; //Não pode esquecer de implementar esse método nas classes filhas caso for instanciado.
 }
