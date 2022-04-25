@@ -20,6 +20,7 @@ import { NegociacoesView } from "../views/negociacoes-view.js";
     }
 
     public adiciona(): void {
+         /* Comentários teste*/
         const negociacao = Negociacao.criaDe(
             this.inputData.value,
             this.inputQuantidade.value,
