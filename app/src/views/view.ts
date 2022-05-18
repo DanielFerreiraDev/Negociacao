@@ -1,3 +1,5 @@
+import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
+
 export abstract class View<T> { //Toda classe abstrata pode ter 0 ou mais métodos abstratos(um método que a classse pai não sabe como vai ser implementado)
 
     protected elemento: HTMLElement;
@@ -15,6 +17,7 @@ export abstract class View<T> { //Toda classe abstrata pode ter 0 ou mais métod
         }
     }
 
+    @logarTempoDeExecucao(true)
     public update(model: T): void {
         let template = this.template(model);
         if (this.escapar) {
