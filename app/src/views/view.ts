@@ -14,8 +14,6 @@ export abstract class View<T> { //Toda classe abstrata pode ter 0 ou mais métod
         }
     }
 
-    @logarTempoDeExecucao(true)
-    @inspect
     public update(model: T): void {
         let template = this.template(model);
         this.elemento.innerHTML = template;
