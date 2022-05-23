@@ -19,7 +19,6 @@ import { NegociacoesView } from "../views/negociacoes-view.js";
     private mensagemView = new MensagemView('#mensagemView');
 
     constructor() {
-        
         this.negociacoesView.update(this.negociacoes);
     }
 
