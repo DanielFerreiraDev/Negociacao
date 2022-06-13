@@ -1,14 +1,14 @@
-import { domInjector } from "../decorators/dom-injector.js";
-import { inspect } from "../decorators/inspect.js";
-import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
-import { DiasDaSemana } from "../enums/dias-da-semana.js";
-import { Negociacao } from "../models/negociacao.js";
-import { Negociacoes } from "../models/negociacoes.js";
-import { MensagemView } from "../views/mensagem-view.js";
-import { NegociacoesView } from "../views/negociacoes-view.js";
-import {NegociacaoDoDia} from "../interfaces/negociacao-do-dia.js";
+import {domInjector} from "../decorators/dom-injector.js";
+import {inspect} from "../decorators/inspect.js";
+import {logarTempoDeExecucao} from "../decorators/logar-tempo-de-execucao.js";
+import {DiasDaSemana} from "../enums/dias-da-semana.js";
+import {Negociacao} from "../models/negociacao.js";
+import {Negociacoes} from "../models/negociacoes.js";
+import {MensagemView} from "../views/mensagem-view.js";
+import {NegociacoesView} from "../views/negociacoes-view.js";
+import {NegociacoesService} from "../services/negociacoes-service.js";
 
- export class NegociacaoController {
+export class NegociacaoController {
     @domInjector('#data')
     private inputData: HTMLInputElement;
     @domInjector('#quantidade')
@@ -18,6 +18,7 @@ import {NegociacaoDoDia} from "../interfaces/negociacao-do-dia.js";
     private negociacoes = new Negociacoes;
     private negociacoesView = new NegociacoesView('#negociacoesView');
     private mensagemView = new MensagemView('#mensagemView');
+    private negociacaoService = new NegociacoesService();
 
     constructor() {
         this.negociacoesView.update(this.negociacoes);
@@ -26,7 +27,7 @@ import {NegociacaoDoDia} from "../interfaces/negociacao-do-dia.js";
     @inspect
     @logarTempoDeExecucao()
     public adiciona(): void {
-         /* Comentários teste*/
+        /* Comentários teste*/
         const negociacao = Negociacao.criaDe(
             this.inputData.value,
             this.inputQuantidade.value,
@@ -38,23 +39,14 @@ import {NegociacaoDoDia} from "../interfaces/negociacao-do-dia.js";
         }
         this.negociacoes.adiciona(negociacao);
         this.limparFormulario();
-        this.atualizaView();  
+        this.atualizaView();
     }
 
     public importaDados(): void {
-        fetch('http://localhost:8080/dados')
-            .then(response => response.json())
-            .then((dados: NegociacaoDoDia[]) => {
-                return dados.map(dadoDeHoje => {
-                    return new Negociacao(
-                        new Date(),
-                        dadoDeHoje.vezes,
-                        dadoDeHoje.montante
-                    )
-                })
-            })
+        this.negociacaoService
+            .obterNegociacoesDoDia()
             .then(negociacoesDeHoje => {
-                for(let negociacao of negociacoesDeHoje) {
+                for (let negociacao of negociacoesDeHoje) {
                     this.negociacoes.adiciona(negociacao);
                 }
                 this.negociacoesView.update(this.negociacoes);
@@ -62,7 +54,7 @@ import {NegociacaoDoDia} from "../interfaces/negociacao-do-dia.js";
     }
 
     private ehDiaUtil(data: Date) {
-        return data.getDay() > DiasDaSemana.DOMINGO 
+        return data.getDay() > DiasDaSemana.DOMINGO
             && data.getDay() < DiasDaSemana.SABADO;
     }
 
@@ -78,4 +70,4 @@ import {NegociacaoDoDia} from "../interfaces/negociacao-do-dia.js";
         this.mensagemView.update('Negociação adicionada com sucesso!');
     }
 
- }
+}
