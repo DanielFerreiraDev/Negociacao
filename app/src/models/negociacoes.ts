@@ -1,7 +1,7 @@
 import {Negociacao} from './negociacao';
-import {Imprimivel} from "../utils/imprimivel.js";
+import {Imprimivel} from "../interfaces/imprimivel.js";
 
-export class Negociacoes extends Imprimivel{
+export class Negociacoes implements Imprimivel{
     private negociacoes: Negociacao[] = [];
 
     public adiciona(negociacao: Negociacao) {
